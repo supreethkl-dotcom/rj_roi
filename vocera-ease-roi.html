@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vocera Ease — ROI Business Case</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,600;0,700;1,300&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ink: #0e1117;
+  --ink2: #161b27;
+  --ink3: #1e2636;
+  --gold: #e8b84b;
+  --gold2: #c9962c;
+  --teal: #2dd4bf;
+  --blue: #60a5fa;
+  --rose: #fb7185;
+  --green: #4ade80;
+  --lavender: #a78bfa;
+  --text: #f1f5f9;
+  --muted: #64748b;
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.12);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--ink);
+  font-family: 'DM Sans', sans-serif;
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Background texture */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background:
+    radial-gradient(ellipse 80% 50% at 20% 10%, rgba(232,184,75,0.06), transparent),
+    radial-gradient(ellipse 60% 40% at 80% 90%, rgba(45,212,191,0.05), transparent);
+  pointer-events: none; z-index: 0;
+}
+
+.page { max-width: 1120px; margin: 0 auto; padding: 0 24px 80px; position: relative; z-index: 1; }
+
+/* ─── Hero ─── */
+.hero {
+  padding: 64px 0 48px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 24px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 48px;
+  animation: fadeUp .6s ease both;
+}
+.hero-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 12px;
+  display: flex; align-items: center; gap: 8px;
+}
+.hero-eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 24px; height: 1px;
+  background: var(--gold);
+}
+.hero h1 {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(28px, 5vw, 52px);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -1.5px;
+  margin-bottom: 12px;
+}
+.hero h1 em { font-style: italic; color: var(--gold); }
+.hero p {
+  font-size: 14px;
+  color: var(--muted);
+  max-width: 520px;
+  line-height: 1.6;
+}
+.hero-badge {
+  text-align: right;
+  flex-shrink: 0;
+}
+.hero-badge .bcr {
+  font-family: 'Fraunces', serif;
+  font-size: 64px;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+  letter-spacing: -2px;
+}
+.hero-badge .bcr-label {
+  font-size: 11px;
+  color: var(--muted);
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* ─── KPI Strip ─── */
+.kpi-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 48px;
+  animation: fadeUp .6s .1s ease both;
+}
+.kpi {
+  background: var(--ink2);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px 18px;
+  position: relative;
+  overflow: hidden;
+  transition: transform .2s, border-color .2s;
+}
+.kpi:hover { transform: translateY(-3px); border-color: var(--border2); }
+.kpi::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+}
+.kpi.k-gold::before { background: var(--gold); }
+.kpi.k-teal::before { background: var(--teal); }
+.kpi.k-green::before { background: var(--green); }
+.kpi.k-rose::before { background: var(--rose); }
+
+.kpi-label {
+  font-size: 10px;
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.kpi-value {
+  font-family: 'Fraunces', serif;
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -1px;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.kpi.k-gold .kpi-value { color: var(--gold); }
+.kpi.k-teal .kpi-value { color: var(--teal); }
+.kpi.k-green .kpi-value { color: var(--green); }
+.kpi.k-rose .kpi-value { color: var(--rose); }
+
+.kpi-sub { font-size: 11px; color: var(--muted); }
+
+/* ─── Layout ─── */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 20px;
+  animation: fadeUp .6s .15s ease both;
+}
+.grid-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 20px;
+  animation: fadeUp .6s .2s ease both;
+}
+
+/* ─── Card ─── */
+.card {
+  background: var(--ink2);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+}
+.card-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  display: flex; align-items: center; gap: 8px;
+}
+.card-title .dot { width: 6px; height: 6px; border-radius: 50%; }
+
+/* ─── Inputs ─── */
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.inp-row {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.inp-label {
+  font-size: 11px;
+  color: var(--muted);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.inp-label .unit {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  color: var(--muted);
+  background: var(--ink3);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.inp-slider-wrap {
+  display: flex; align-items: center; gap: 10px;
+}
+.inp-slider-wrap input[type=range] {
+  flex: 1;
+  -webkit-appearance: none;
+  height: 4px;
+  background: var(--ink3);
+  border-radius: 4px;
+  outline: none;
+  cursor: pointer;
+}
+.inp-slider-wrap input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  background: var(--gold);
+  cursor: pointer;
+  box-shadow: 0 0 8px rgba(232,184,75,0.5);
+  transition: transform .15s;
+}
+.inp-slider-wrap input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
+
+.inp-num {
+  background: var(--ink3);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  color: var(--text);
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  padding: 5px 8px;
+  width: 80px;
+  text-align: right;
+  outline: none;
+  transition: border-color .2s;
+}
+.inp-num:focus { border-color: var(--gold); }
+
+/* ─── Benefits breakdown ─── */
+.benefit-rows { display: flex; flex-direction: column; gap: 12px; }
+.benefit-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.benefit-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.benefit-name {
+  font-size: 12px;
+  font-weight: 500;
+  display: flex; align-items: center; gap: 7px;
+}
+.benefit-name .ico { font-size: 14px; }
+.benefit-amt {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  font-weight: 500;
+}
+.benefit-bar-bg {
+  height: 5px;
+  background: var(--ink3);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.benefit-bar-fill {
+  height: 100%;
+  border-radius: 10px;
+  transition: width .6s cubic-bezier(.4,0,.2,1);
+}
+.benefit-note {
+  font-size: 10px;
+  color: var(--muted);
+}
+
+/* ─── Costs ─── */
+.cost-rows { display: flex; flex-direction: column; gap: 10px; }
+.cost-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  background: var(--ink3);
+  border-radius: 10px;
+  border: 1px solid var(--border);
+}
+.cost-row.total {
+  background: rgba(251,113,133,0.08);
+  border-color: rgba(251,113,133,0.2);
+}
+.cost-name { font-size: 12px; color: var(--text); }
+.cost-name .sub { font-size: 10px; color: var(--muted); display: block; }
+.cost-val {
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--rose);
+}
+.cost-row.total .cost-val { font-size: 15px; }
+
+/* ─── Summary card ─── */
+.summary-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.sum-item {
+  background: var(--ink3);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px;
+}
+.sum-label { font-size: 10px; color: var(--muted); font-family: 'DM Mono', monospace; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
+.sum-val { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 600; }
+.sum-val.pos { color: var(--green); }
+.sum-val.neg { color: var(--rose); }
+.sum-val.gold { color: var(--gold); }
+.sum-val.teal { color: var(--teal); }
+
+/* ─── Payback visual ─── */
+.payback-wrap { margin-top: 16px; }
+.payback-label { font-size: 11px; color: var(--muted); margin-bottom: 6px; }
+.payback-track {
+  height: 8px;
+  background: var(--ink3);
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+}
+.payback-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--gold), var(--teal));
+  border-radius: 10px;
+  transition: width .7s cubic-bezier(.4,0,.2,1);
+}
+.payback-months {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 4px;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  color: var(--muted);
+}
+
+/* ─── Waterfall chart ─── */
+.waterfall { margin-top: 8px; }
+.wf-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  height: 140px;
+  padding-bottom: 24px;
+  position: relative;
+}
+.wf-bars::after {
+  content: '';
+  position: absolute;
+  bottom: 24px; left: 0; right: 0;
+  height: 1px;
+  background: var(--border2);
+}
+.wf-bar-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  height: 100%;
+  position: relative;
+}
+.wf-bar {
+  width: 100%;
+  border-radius: 5px 5px 0 0;
+  transition: height .6s cubic-bezier(.4,0,.2,1);
+  cursor: default;
+  position: relative;
+}
+.wf-bar:hover::after {
+  content: attr(data-tip);
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--ink3);
+  border: 1px solid var(--border2);
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 10px;
+  font-family: 'DM Mono', monospace;
+  white-space: nowrap;
+  z-index: 10;
+  color: var(--text);
+}
+.wf-name {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 8px;
+  font-family: 'DM Mono', monospace;
+  color: var(--muted);
+  text-align: center;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ─── Hypothesis ─── */
+.hypothesis {
+  background: linear-gradient(135deg, rgba(232,184,75,0.07), rgba(45,212,191,0.05));
+  border: 1px solid rgba(232,184,75,0.2);
+  border-radius: 16px;
+  padding: 28px 32px;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+  animation: fadeUp .6s .3s ease both;
+}
+.hypothesis::before {
+  content: '"';
+  position: absolute;
+  top: -10px; left: 16px;
+  font-family: 'Fraunces', serif;
+  font-size: 120px;
+  color: rgba(232,184,75,0.08);
+  line-height: 1;
+  pointer-events: none;
+}
+.hypothesis-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 12px;
+}
+.hypothesis p {
+  font-family: 'Fraunces', serif;
+  font-size: 16px;
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.65;
+  color: var(--text);
+  position: relative;
+  z-index: 1;
+}
+.hypothesis p strong { font-style: normal; font-weight: 600; color: var(--gold); }
+
+/* ─── Section headers ─── */
+.section-head {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 16px;
+  margin-top: 40px;
+  display: flex; align-items: center; gap: 10px;
+}
+.section-head::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+/* ─── Toggle tabs ─── */
+.tabs {
+  display: flex; gap: 4px;
+  background: var(--ink2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 4px;
+  margin-bottom: 20px;
+  width: fit-content;
+  animation: fadeUp .5s .05s ease both;
+}
+.tab {
+  padding: 7px 18px;
+  border-radius: 7px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background .2s, color .2s;
+  color: var(--muted);
+  user-select: none;
+}
+.tab.active {
+  background: var(--gold);
+  color: var(--ink);
+}
+
+/* ─── Animations ─── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes countUp {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 768px) {
+  .hero { grid-template-columns: 1fr; }
+  .hero-badge { text-align: left; }
+  .kpi-strip { grid-template-columns: repeat(2, 1fr); }
+  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  .summary-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Hero -->
+  <div class="hero">
+    <div>
+      <div class="hero-eyebrow">Vocera Ease · AI Integration · Business Case</div>
+      <h1>Return on <em>Investment</em><br>Analysis</h1>
+      <p>24-month financial model for the Generative AI layer integration into Vocera Ease — covering discharge automation, post-discharge recovery coaching, and Viking operational triggers.</p>
+    </div>
+    <div class="hero-badge">
+      <div class="bcr" id="hero-bcr">9.8×</div>
+      <div class="bcr-label">Benefit-Cost Ratio</div>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <div class="tab active" onclick="setTab('overview')">Overview</div>
+    <div class="tab" onclick="setTab('inputs')">Edit Assumptions</div>
+    <div class="tab" onclick="setTab('detail')">Detailed Breakdown</div>
+  </div>
+
+  <!-- KPI Strip -->
+  <div class="kpi-strip">
+    <div class="kpi k-gold">
+      <div class="kpi-label">Net Benefit (24mo)</div>
+      <div class="kpi-value" id="kpi-net">$6.52M</div>
+      <div class="kpi-sub">After all project costs</div>
+    </div>
+    <div class="kpi k-teal">
+      <div class="kpi-label">Total Benefits</div>
+      <div class="kpi-value" id="kpi-benefits">$7.26M</div>
+      <div class="kpi-sub">Combined 24-month value</div>
+    </div>
+    <div class="kpi k-rose">
+      <div class="kpi-label">Total Costs</div>
+      <div class="kpi-value" id="kpi-costs">$740K</div>
+      <div class="kpi-sub">Dev + ops + training</div>
+    </div>
+    <div class="kpi k-green">
+      <div class="kpi-label">Payback Period</div>
+      <div class="kpi-value" id="kpi-payback">2.6 mo</div>
+      <div class="kpi-sub">Time to recoup investment</div>
+    </div>
+  </div>
+
+  <!-- OVERVIEW TAB -->
+  <div id="tab-overview">
+    <div class="section-head">Benefits Breakdown (Annualized)</div>
+    <div class="grid-2">
+      <!-- Benefits chart -->
+      <div class="card">
+        <div class="card-title"><div class="dot" style="background:var(--teal)"></div><span style="color:var(--teal)">Annual Value by Category</span></div>
+        <div class="benefit-rows" id="benefit-rows">
+          <!-- filled by JS -->
+        </div>
+      </div>
+
+      <!-- Waterfall + summary -->
+      <div class="card">
+        <div class="card-title"><div class="dot" style="background:var(--gold)"></div><span style="color:var(--gold)">24-Month Value Waterfall</span></div>
+        <div class="waterfall">
+          <div class="wf-bars" id="wf-bars">
+            <!-- filled by JS -->
+          </div>
+        </div>
+
+        <div class="summary-grid" style="margin-top:20px">
+          <div class="sum-item">
+            <div class="sum-label">Total Costs</div>
+            <div class="sum-val neg" id="sum-costs">$740K</div>
+          </div>
+          <div class="sum-item">
+            <div class="sum-label">Total Benefits</div>
+            <div class="sum-val pos" id="sum-benefits">$7.26M</div>
+          </div>
+          <div class="sum-item">
+            <div class="sum-label">Net Benefit</div>
+            <div class="sum-val gold" id="sum-net">$6.52M</div>
+          </div>
+          <div class="sum-item">
+            <div class="sum-label">BCR</div>
+            <div class="sum-val teal" id="sum-bcr">9.8 : 1</div>
+          </div>
+        </div>
+
+        <div class="payback-wrap">
+          <div class="payback-label">Payback Progress (out of 24 months): <span id="payback-label-val">2.6 months</span></div>
+          <div class="payback-track">
+            <div class="payback-fill" id="payback-fill" style="width:11%"></div>
+          </div>
+          <div class="payback-months">
+            <span>0</span><span>6</span><span>12</span><span>18</span><span>24</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hypothesis -->
+    <div class="hypothesis">
+      <div class="hypothesis-label">The Ease AI Hypothesis Statement</div>
+      <p id="hypothesis-text">
+        "By integrating a Generative AI layer into the Vocera Ease platform to automate discharge logistics (Viking) and post-discharge recovery coaching, the hospital will achieve a <strong>Benefit-Cost Ratio of <span id="hyp-bcr">9.8</span></strong> over 24 months. The primary driver of value is the acceleration of <strong>bed turnover</strong> and the reduction of <strong>preventable readmissions</strong> through hyper-personalized, LLM-driven patient engagement."
+      </p>
+    </div>
+  </div>
+
+  <!-- INPUTS TAB -->
+  <div id="tab-inputs" style="display:none">
+    <div class="section-head">Adjust Assumptions — Model Recalculates Live</div>
+    <div class="grid-3">
+      <div class="card">
+        <div class="card-title"><div class="dot" style="background:var(--blue)"></div><span style="color:var(--blue)">Volume & Horizon</span></div>
+        <div class="input-group">
+          <div class="inp-row">
+            <div class="inp-label">Analysis Period <span class="unit">months</span></div>
+            <div class="inp-slider-wrap">
+              <input type="range" id="sl-months" min="12" max="60" step="6" value="24" oninput="syncInput('months',this.value)">
+              <input type="number" id="in-months" class="inp-num" value="24" min="12" max="60" oninput="syncSlider('months',this.value)">
+            </div>
+          </div>
+          <div class="inp-row">
+            <div class="inp-label">Annual Patient Volume <span class="unit">patients</span></div>
+            <div class="inp-slider-wrap">
+              <input type="range" id="sl-vol" min="1000" max="20000" step="500" value="5000" oninput="syncInput('vol',this.value)">
+              <input type="number" id="in-vol" class="inp-num" value="5000" min="1000" max="20000" oninput="syncSlider('vol',this.value)">
+            </div>
+          </div>
+          <div class="inp-row">
+            <div class="inp-label">Base Readmission Rate <span class="unit">%</span></div>
+            <div class="inp-slider-wrap">
+              <input type="range" id="sl-readrate" min="2" max="25" step="1" value="10" oninput="syncInput('readrate',this.value)">
+              <input type="number" id="in-readrate" class="inp-num" value="10" min="2" max="25" oninput="syncSlider('readrate',this.value)">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><div class="dot" style="background:var(--rose)"></div><span style="color:var(--rose)">Cost Parameters</span></div>
+        <div class="input-group">
+          <div class="inp-row">
+            <div class="inp-label">AI Dev & Integration <span class="unit">USD</span></div>
+            <div class="inp-slider-wrap">
+              <input type="range" id="sl-dev" min="100000" max="1000000" step="25000" value="450000" oninput="syncInput('dev',this.value)">
+              <input type="number" id="in-dev" class="inp-num" value="450000" oninput="syncSlider('dev',this.value)">
+            </div>
+          </div>
+          <div class="inp-row">
+            <div class="inp-label">Annual Ops License <span class="unit">USD/yr</span></div>
+            <div class="inp-slider-wrap">
+              <input type="range" id="sl-ops" min="20000" max="400000" step="10000" value="120000" oninput="syncInput('ops',this.value)">
+              <input type="number" id="in-ops" class="inp-num" value="120000" oninput="syncSlider('ops',this.value)">
+            </div>
+          </div>
+          <div class="inp-row">
+            <div class="inp-label">Staff Training <span class="unit">USD</span></div>
+            <div class="inp-slider-wrap">
+              <input type="range" id="sl-train" min="0" max="200000" step="5000" value="50000" oninput="syncInput('train',this.value)">
+              <input type="number" id="in-train" class="inp-num" value="50000" oninput="syncSlider('train',this.value)">
+            </div>
+          </div>
+          <div class="inp-row">
+            <div class="inp-label">Cost per Readmission <span class="unit">USD</span></div>
+            <div class="inp-slider-wrap">
+              <input type="range" id="sl-readcost" min="5000" max="40000" step="500" value="15200" oninput="syncInput('readcost',this.value)">
+              <input type="number" id="in-readcost" class="inp-num" value="15200" oninput="syncSlider('readcost',this.value)">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><div class="dot" style="background:var(--green)"></div><span style="color:var(--green)">Benefit Assumptions</span></div>
+        <div class="input-group">
+          <div class="inp-row">
+            <div class="inp-label">Readmission Reduction <span class="unit">%</span></div>
+            <div class="inp-slider-wrap">
+              <input type="range" id="sl-readred" min="5" max="40" step="1" value="15" oninput="syncInput('readred',this.value)">
+              <input type="number" id="in-readred" class="inp-num" value="15" oninput="syncSlider('readred',this.value)">
+            </div>
+          </div>
+          <div class="inp-row">
+            <div class="inp-label">Bed Turnover Saved <span class="unit">min</span></div>
+            <div class="inp-slider-wrap">
+              <input type="range" id="sl-bedmin" min="15" max="120" step="5" value="45" oninput="syncInput('bedmin',this.value)">
+              <input type="number" id="in-bedmin" class="inp-num" value="45" oninput="syncSlider('bedmin',this.value)">
+            </div>
+          </div>
+          <div class="inp-row">
+            <div class="inp-label">Bed Hourly Value <span class="unit">USD/hr</span></div>
+            <div class="inp-slider-wrap">
+              <input type="range" id="sl-bedval" min="100" max="2000" step="50" value="600" oninput="syncInput('bedval',this.value)">
+              <input type="number" id="in-bedval" class="inp-num" value="600" oninput="syncSlider('bedval',this.value)">
+            </div>
+          </div>
+          <div class="inp-row">
+            <div class="inp-label">Nurse Automation Rate <span class="unit">%</span></div>
+            <div class="inp-slider-wrap">
+              <input type="range" id="sl-nurseauto" min="20" max="100" step="5" value="80" oninput="syncInput('nurseauto',this.value)">
+              <input type="number" id="in-nurseauto" class="inp-num" value="80" oninput="syncSlider('nurseauto',this.value)">
+            </div>
+          </div>
+          <div class="inp-row">
+            <div class="inp-label">HCAHPS Bonus (annual) <span class="unit">USD</span></div>
+            <div class="inp-slider-wrap">
+              <input type="range" id="sl-hcahps" min="0" max="1000000" step="25000" value="150000" oninput="syncInput('hcahps',this.value)">
+              <input type="number" id="in-hcahps" class="inp-num" value="150000" oninput="syncSlider('hcahps',this.value)">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DETAIL TAB -->
+  <div id="tab-detail" style="display:none">
+    <div class="section-head">Cost Itemization</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title"><div class="dot" style="background:var(--rose)"></div><span style="color:var(--rose)">24-Month Project Costs</span></div>
+        <div class="cost-rows" id="cost-rows"><!-- JS --></div>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="dot" style="background:var(--green)"></div><span style="color:var(--green)">Benefit Detail (Annual → 24mo)</span></div>
+        <div class="cost-rows" id="benefit-detail"><!-- JS --></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ─── State ───────────────────────────────────────────────────────────
+const S = {
+  months: 24,
+  vol: 5000,
+  readrate: 10,
+  dev: 450000,
+  ops: 120000,
+  train: 50000,
+  readcost: 15200,
+  readred: 15,
+  bedmin: 45,
+  bedval: 600,
+  nurseauto: 80,
+  hcahps: 150000,
+  nurseTime: 0.5,
+  nurseRate: 45,
+};
+
+function calc() {
+  const yrs = S.months / 12;
+
+  // Costs
+  const costDev = S.dev;
+  const costOps = S.ops * yrs;
+  const costTrain = S.train;
+  const totalCost = costDev + costOps + costTrain;
+
+  // Benefits (annual)
+  const avoided = S.vol * (S.readrate / 100) * (S.readred / 100);
+  const benefitRead = avoided * S.readcost;
+  const benefitBed = S.vol * (S.bedmin / 60) * S.bedval;
+  const benefitLabor = S.vol * S.nurseTime * S.nurseRate * (S.nurseauto / 100);
+  const benefitHCAHPS = S.hcahps;
+  const totalBenefitAnnual = benefitRead + benefitBed + benefitLabor + benefitHCAHPS;
+  const totalBenefit = totalBenefitAnnual * yrs;
+
+  // Summary
+  const net = totalBenefit - totalCost;
+  const bcr = totalBenefit / totalCost;
+  const paybackMonths = (S.dev / (totalBenefitAnnual / 12));
+
+  return {
+    costDev, costOps, costTrain, totalCost,
+    benefitRead, benefitBed, benefitLabor, benefitHCAHPS,
+    totalBenefitAnnual, totalBenefit,
+    net, bcr, paybackMonths, yrs, avoided
+  };
+}
+
+// ─── Formatting ───────────────────────────────────────────────────────
+function fmtM(v) {
+  if (v >= 1e6) return '$' + (v/1e6).toFixed(2) + 'M';
+  if (v >= 1e3) return '$' + Math.round(v/1e3) + 'K';
+  return '$' + Math.round(v);
+}
+function fmt(v) { return '$' + v.toLocaleString('en-US', {maximumFractionDigits:0}); }
+
+// ─── Render ───────────────────────────────────────────────────────────
+function render() {
+  const R = calc();
+
+  // KPIs
+  document.getElementById('kpi-net').textContent = fmtM(R.net);
+  document.getElementById('kpi-benefits').textContent = fmtM(R.totalBenefit);
+  document.getElementById('kpi-costs').textContent = fmtM(R.totalCost);
+  document.getElementById('kpi-payback').textContent = R.paybackMonths.toFixed(1) + ' mo';
+  document.getElementById('hero-bcr').textContent = R.bcr.toFixed(1) + '×';
+
+  // Summary
+  document.getElementById('sum-costs').textContent = fmtM(R.totalCost);
+  document.getElementById('sum-benefits').textContent = fmtM(R.totalBenefit);
+  document.getElementById('sum-net').textContent = fmtM(R.net);
+  document.getElementById('sum-bcr').textContent = R.bcr.toFixed(1) + ' : 1';
+  document.getElementById('hyp-bcr').textContent = R.bcr.toFixed(1);
+
+  // Payback bar
+  const pbPct = Math.min((R.paybackMonths / S.months) * 100, 100);
+  document.getElementById('payback-fill').style.width = pbPct + '%';
+  document.getElementById('payback-label-val').textContent = R.paybackMonths.toFixed(1) + ' months';
+
+  // Benefits breakdown
+  const benefits = [
+    { name: 'Bed Turnover (Viking)', ico: '🛏️', val: R.benefitBed, color: 'var(--teal)',    note: `${S.vol.toLocaleString()} discharges × ${S.bedmin}min saved × $${S.bedval}/hr` },
+    { name: 'Readmission Reduction', ico: '📉', val: R.benefitRead, color: 'var(--green)',   note: `${Math.round(R.avoided)} avoided @ ${fmt(S.readcost)} each` },
+    { name: 'HCAHPS / CMS Bonus',    ico: '⭐', val: R.benefitHCAHPS, color: 'var(--gold)', note: '1% CMS reimbursement improvement' },
+    { name: 'Nurse Labor Saved',      ico: '👩‍⚕️', val: R.benefitLabor, color: 'var(--lavender)', note: `${S.nurseauto}% automation of follow-up calls` },
+  ];
+  const maxB = Math.max(...benefits.map(b => b.val));
+  document.getElementById('benefit-rows').innerHTML = benefits.map(b => `
+    <div class="benefit-row">
+      <div class="benefit-header">
+        <div class="benefit-name"><span class="ico">${b.ico}</span>${b.name}</div>
+        <div class="benefit-amt" style="color:${b.color}">${fmtM(b.val)}/yr</div>
+      </div>
+      <div class="benefit-bar-bg">
+        <div class="benefit-bar-fill" style="width:${(b.val/maxB*100).toFixed(1)}%;background:${b.color}"></div>
+      </div>
+      <div class="benefit-note">${b.note}</div>
+    </div>
+  `).join('');
+
+  // Waterfall
+  const wfItems = [
+    { label: 'Investment', val: -R.totalCost, color: 'var(--rose)' },
+    { label: 'Bed Turnover', val: R.benefitBed * R.yrs, color: 'var(--teal)' },
+    { label: 'Readmit', val: R.benefitRead * R.yrs, color: 'var(--green)' },
+    { label: 'HCAHPS', val: R.benefitHCAHPS * R.yrs, color: 'var(--gold)' },
+    { label: 'Nursing', val: R.benefitLabor * R.yrs, color: 'var(--lavender)' },
+    { label: 'Net', val: R.net, color: R.net >= 0 ? 'var(--green)' : 'var(--rose)' },
+  ];
+  const maxAbs = Math.max(...wfItems.map(i => Math.abs(i.val)));
+  document.getElementById('wf-bars').innerHTML = wfItems.map(item => {
+    const pct = Math.abs(item.val) / maxAbs * 100;
+    return `
+      <div class="wf-bar-wrap">
+        <div class="wf-bar" style="height:${pct}%;background:${item.color};opacity:0.85" data-tip="${fmtM(item.val)}"></div>
+        <div class="wf-name">${item.label}</div>
+      </div>`;
+  }).join('');
+
+  // Cost detail
+  document.getElementById('cost-rows').innerHTML = `
+    <div class="cost-row">
+      <div class="cost-name">AI Development & Integration<span class="sub">LLM fine-tuning, EHR/Viking APIs, UI</span></div>
+      <div class="cost-val">${fmt(R.costDev)}</div>
+    </div>
+    <div class="cost-row">
+      <div class="cost-name">Ongoing Operations (${S.months} mo)<span class="sub">Cloud GPU, API tokens, monitoring</span></div>
+      <div class="cost-val">${fmt(R.costOps)}</div>
+    </div>
+    <div class="cost-row">
+      <div class="cost-name">Staff Training<span class="sub">200+ nurses and admins</span></div>
+      <div class="cost-val">${fmt(R.costTrain)}</div>
+    </div>
+    <div class="cost-row total">
+      <div class="cost-name"><strong>TOTAL PROJECT COSTS</strong><span class="sub">${S.months}-month investment</span></div>
+      <div class="cost-val">${fmt(R.totalCost)}</div>
+    </div>`;
+
+  document.getElementById('benefit-detail').innerHTML = `
+    <div class="cost-row">
+      <div class="cost-name">Bed Turnover — Viking<span class="sub">${S.vol.toLocaleString()} × ${S.bedmin}min × $${S.bedval}/hr × ${R.yrs}yr</span></div>
+      <div class="cost-val" style="color:var(--teal)">${fmt(R.benefitBed * R.yrs)}</div>
+    </div>
+    <div class="cost-row">
+      <div class="cost-name">Readmission Reduction<span class="sub">${Math.round(R.avoided)} avoided × ${fmt(S.readcost)} × ${R.yrs}yr</span></div>
+      <div class="cost-val" style="color:var(--green)">${fmt(R.benefitRead * R.yrs)}</div>
+    </div>
+    <div class="cost-row">
+      <div class="cost-name">HCAHPS / CMS Bonus<span class="sub">1% reimbursement increase × ${R.yrs}yr</span></div>
+      <div class="cost-val" style="color:var(--gold)">${fmt(R.benefitHCAHPS * R.yrs)}</div>
+    </div>
+    <div class="cost-row">
+      <div class="cost-name">Nurse Labor Automation<span class="sub">${S.nurseauto}% of follow-up calls automated × ${R.yrs}yr</span></div>
+      <div class="cost-val" style="color:var(--lavender)">${fmt(R.benefitLabor * R.yrs)}</div>
+    </div>
+    <div class="cost-row total" style="border-color:rgba(74,222,128,0.25);background:rgba(74,222,128,0.06)">
+      <div class="cost-name"><strong>TOTAL BENEFITS</strong><span class="sub">${S.months}-month combined value</span></div>
+      <div class="cost-val" style="color:var(--green)">${fmt(R.totalBenefit)}</div>
+    </div>`;
+}
+
+// ─── Sync sliders ─────────────────────────────────────────────────────
+function syncInput(key, val) {
+  S[key] = parseFloat(val);
+  document.getElementById('in-' + key).value = val;
+  render();
+}
+function syncSlider(key, val) {
+  S[key] = parseFloat(val);
+  document.getElementById('sl-' + key).value = val;
+  render();
+}
+
+// ─── Tabs ─────────────────────────────────────────────────────────────
+function setTab(name) {
+  ['overview','inputs','detail'].forEach(t => {
+    document.getElementById('tab-' + t).style.display = t === name ? '' : 'none';
+  });
+  document.querySelectorAll('.tab').forEach((el, i) => {
+    el.classList.toggle('active', ['overview','inputs','detail'][i] === name);
+  });
+  if (name === 'overview' || name === 'detail') render();
+}
+
+// ─── Init ──────────────────────────────────────────────────────────────
+render();
+</script>
+</body>
+</html>
