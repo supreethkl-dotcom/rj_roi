@@ -710,8 +710,8 @@ body::before {
           <div class="inp-row">
             <div class="inp-label">Readmission Reduction <span class="unit">%</span></div>
             <div class="inp-slider-wrap">
-              <input type="range" id="sl-readred" min="5" max="40" step="1" value="15" oninput="syncInput('readred',this.value)">
-              <input type="number" id="in-readred" class="inp-num" value="15" oninput="syncSlider('readred',this.value)">
+              <input type="range" id="sl-readred" min="5" max="40" step="1" value="10" oninput="syncInput('readred',this.value)">
+              <input type="number" id="in-readred" class="inp-num" value="10" oninput="syncSlider('readred',this.value)">
             </div>
           </div>
           <div class="inp-row">
@@ -725,21 +725,21 @@ body::before {
             <div class="inp-label">Bed Hourly Value <span class="unit">USD/hr</span></div>
             <div class="inp-slider-wrap">
               <input type="range" id="sl-bedval" min="100" max="2000" step="50" value="600" oninput="syncInput('bedval',this.value)">
-              <input type="number" id="in-bedval" class="inp-num" value="600" oninput="syncSlider('bedval',this.value)">
+              <input type="number" id="in-bedval" class="inp-num" value="300" oninput="syncSlider('bedval',this.value)">
             </div>
           </div>
           <div class="inp-row">
             <div class="inp-label">Nurse Automation Rate <span class="unit">%</span></div>
             <div class="inp-slider-wrap">
               <input type="range" id="sl-nurseauto" min="20" max="100" step="5" value="80" oninput="syncInput('nurseauto',this.value)">
-              <input type="number" id="in-nurseauto" class="inp-num" value="80" oninput="syncSlider('nurseauto',this.value)">
+              <input type="number" id="in-nurseauto" class="inp-num" value="50" oninput="syncSlider('nurseauto',this.value)">
             </div>
           </div>
           <div class="inp-row">
             <div class="inp-label">HCAHPS Bonus (annual) <span class="unit">USD</span></div>
             <div class="inp-slider-wrap">
-              <input type="range" id="sl-hcahps" min="0" max="1000000" step="25000" value="150000" oninput="syncInput('hcahps',this.value)">
-              <input type="number" id="in-hcahps" class="inp-num" value="150000" oninput="syncSlider('hcahps',this.value)">
+              <input type="range" id="sl-hcahps" min="0" max="1000000" step="25000" value="00" oninput="syncInput('hcahps',this.value)">
+              <input type="number" id="in-hcahps" class="inp-num" value="00" oninput="syncSlider('hcahps',this.value)">
             </div>
           </div>
         </div>
